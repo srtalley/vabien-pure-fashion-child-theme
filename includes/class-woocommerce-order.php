@@ -8,8 +8,11 @@ class WooCommerce_Order {
 
         add_action( 'init', array($this, 'change_thankyou_layout'), 10, 1 );
         add_action( 'init', array($this, 'add_custom_order_statuses') );
-
         add_filter( 'wc_order_statuses', array($this, 'rename_order_statuses'), 20, 1 );
+
+        add_filter( 'bulk_actions-edit-shop_order', array($this, 'register_woocommerce_bulk_action'), 999 ); 
+        add_action( 'admin_action_mark_vb-in-process', array($this, 'bulk_process_woocommerce_custom_status') );
+        add_action( 'admin_notices', array($this, 'custom_woocommerce_order_status_notices') );
 
         // Change certain text strings
         add_filter( 'gettext', array($this,'change_text_strings'), 20, 3 );
@@ -119,8 +122,74 @@ class WooCommerce_Order {
         echo '<div class="vabien-thankyou-header"><h1>Merci et Bisous!</h1></div>';
     }
 
-    public function woocommerce_order_details_before_order_table($order) {
 
+    /*
+    * Add your custom bulk action in dropdown
+    * @since 3.5.0
+    */
+    public function register_woocommerce_bulk_action( $bulk_actions ) {
+    
+        wl($bulk_actions);
+        $new_bulk_actions = array();
+        foreach ( $bulk_actions as $key => $label ) { 
+            $new_bulk_actions[$key] = $label;
+            if($key == 'mark_processing' ) {
+                $new_bulk_actions[$key] = 'Change status to new';
+                $new_bulk_actions['mark_vb-in-process'] = 'Change status to in process'; 
+            }
+        }
+        wl($new_bulk_actions);
+
+        return $new_bulk_actions;
+    
+    }
+    /*
+    * Bulk action handler
+    * Make sure that "action name" in the hook is the same like the option value from the above function
+    */
+    public function bulk_process_woocommerce_custom_status() {
+    
+        // if an array with order IDs is not presented, exit the function
+        if( !isset( $_REQUEST['post'] ) && !is_array( $_REQUEST['post'] ) )
+            return;
+    
+        foreach( $_REQUEST['post'] as $order_id ) {
+    
+            $order = new \WC_Order( $order_id );
+            $order_note = 'Updated by bulk edit:';
+            $order->update_status( 'vb-in-process', $order_note, true ); // 
+    
+        }
+    
+        //using add_query_arg() is not required, you can build your URL inline
+        $location = add_query_arg( array(
+            'post_type' => 'shop_order',
+            'marked_vb-in-process' => 1, // marked_vb-in-process=1 is  the $_GET variable for notices
+            'changed' => count( $_REQUEST['post'] ), // number of changed orders
+            'ids' => join( $_REQUEST['post'], ',' ),
+            'post_status' => 'all'
+        ), 'edit.php' );
+    
+        wp_redirect( admin_url( $location ) );
+        exit;
+    }
+    
+    /*
+    * Notices about the updated order status
+    */
+    public function custom_woocommerce_order_status_notices() {
+        global $pagenow, $typenow;
+    
+        if( $typenow == 'shop_order' 
+        && $pagenow == 'edit.php'
+        && isset( $_REQUEST['marked_vb-in-process'] )
+        && $_REQUEST['marked_vb-in-process'] == 1
+        && isset( $_REQUEST['changed'] ) ) {
+    
+            $message = sprintf( _n( 'Order status changed to In Process.', '%s order statuses changed.', $_REQUEST['changed'] ), number_format_i18n( $_REQUEST['changed'] ) );
+            echo "<div class=\"updated\"><p>{$message}</p></div>";
+    
+        }
     }
 }
 

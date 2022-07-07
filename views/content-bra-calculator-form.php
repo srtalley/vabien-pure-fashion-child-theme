@@ -11,13 +11,13 @@
 
 <div class="bc-container">
 	
-	<h2>Sizing Help</h2>
+	<!-- <h2>Sizing Help</h2>
 	<div class="bc-row">
 		<div class="bc-col-mid">
 			<p>To send our team your measurements and get help with bra sizing, please click below and fill our sizing form. We will then reach out via email. Also please feel free to use the calculator and table below.</p>
 			<p style="margin-top:15px; margin-bottom: 20px;"><a href="#bc-sizing-help" class="popup-bc-calculator" style="cursor: pointer;"><span>Click Here for Sizing Form</span></a></p>
 		</div>
-	</div>
+	</div> -->
 
 	<h2>Bra Size Calculator</h2>
 
