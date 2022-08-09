@@ -2,13 +2,16 @@
 	Theme Name: Pure Fashion - VabienUSA Child Theme
 	Theme URI: https://purefashion.fuelthemes.net
 	Description: <strong>A fast &amp; optimized WooCommerce WordPress Theme by <a href="https://fuelthemes.net" target="_blank">fuelthemes</a></strong>
-	Version: 1.1
+	Version: 1.1.1
 	Author: Fuel Themes
 	Author URI: https://fuelthemes.net
 	Text Domain: pure-fashion
   Template: pure-fashion
 
 */
+
+/* Hide reCaptcha badge */
+.grecaptcha-badge { display: none !important; }
 
 /* DiaRegular Font Site-Wide */
 @font-face {
