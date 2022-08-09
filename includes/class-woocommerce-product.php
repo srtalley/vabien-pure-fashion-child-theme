@@ -21,7 +21,6 @@ class WooCommerce_Product {
 
 		add_filter('wp_schema_pro_schema_product', array($this,'dst_wp_schema_pro_schema_product'), 10, 3);
 
-
         // add_action( 'woocommerce_product_thumbnails', array($this, 'wrap_images'), 1);
         // add_action( 'woocommerce_product_thumbnails', array($this, 'wrap_images_end'), 40);
 
@@ -30,6 +29,21 @@ class WooCommerce_Product {
 		// add_filter( 'woocommerce_get_image_size_gallery_thumbnail', array($this, 'override_woocommerce_image_size_gallery_thumbnail') );
 
 		add_action( 'before_woocommerce_init', array($this, 'vabien_add_single_product_ajax_add_to_cart') );
+
+		// set default weight
+		add_filter( 'woocommerce_product_variation_get_weight', array($this, 'woocommerce_product_get_weight_filter'), 1000, 2 );
+		add_filter( 'woocommerce_product_get_weight', array($this, 'woocommerce_product_get_weight_filter'), 1000, 2 );
+
+		add_filter( 'woocommerce_product_variation_get_width', array($this, 'woocommerce_product_get_width_filter'), 10, 2 );
+		add_filter( 'woocommerce_product_get_width', array($this, 'woocommerce_product_get_width_filter'), 10, 2 );
+
+		add_filter( 'woocommerce_product_variation_get_length', array($this, 'woocommerce_product_length_filter'), 10, 2 );
+		add_filter( 'woocommerce_product_get_length', array($this, 'woocommerce_product_length_filter'), 10, 2 );
+
+		add_filter( 'woocommerce_product_variation_get_height', array($this, 'woocommerce_product_height_filter'), 10, 2 );
+		add_filter( 'woocommerce_product_get_height', array($this, 'woocommerce_product_height_filter'), 10, 2 );
+
+
 
     }
 
@@ -209,7 +223,16 @@ class WooCommerce_Product {
 		}
 	}
 
-		/**
+	/** 
+	 * Make sure to return the proper brand
+	 */
+	public function dst_wp_schema_pro_schema_product($schema, $data, $post) {
+		$product_permalink = get_the_permalink($post->ID);
+
+		$schema['brand'] = 'Va Bien';
+		return $schema;
+	}
+	/**
 	 * Ajax Add to Cart Wrapper
 	 */
 	public function vabien_add_single_product_ajax_add_to_cart() {
@@ -252,6 +275,88 @@ class WooCommerce_Product {
 		?>
 		<div class="thb_prod_ajax_to_cart_notices"></div>
 		<?php
+	}
+
+	/**
+	 * set a default weight of 1 pound for each product
+	 */
+	public function woocommerce_product_get_weight_filter( $weight, $product ) {
+		// first check the DB for stored values
+		if ( empty($weight) || $weight == 0 ) {
+			// see if the weight is actually set 
+			$weight = get_post_meta( $product->get_id(), '_weight', true );
+
+			if( empty($weight) && $product->get_type() == 'variation' ) {
+				// get the parent product and get the weight there
+				$weight = get_post_meta( $product->get_parent_id(), '_weight', true );
+			}
+		}
+
+		// if the weight is still not set, set it to 1
+		if ( empty($weight) || $weight == 0 ) {
+			$weight = 1;
+		}
+		return $weight;
+	}
+
+	/**
+	 * set a default width of 8.5 inches
+	 */
+	public function woocommerce_product_get_width_filter( $width, $product ) {
+		// first check the DB for stored values
+		if ( empty($width) || $width == 0 ) {
+			// see if the width is actually set 
+			$width = get_post_meta( $product->get_id(), '_width', true );
+
+			if( empty($width) && $product->get_type() == 'variation' ) {
+				// get the parent product and get the width there
+				$width = get_post_meta( $product->get_parent_id(), '_width', true );
+			}
+		}
+		if ( empty($width) || $width == 0 ) {
+			$width = 8.5;
+		}
+		return $width;
+	}
+
+	/**
+	 * set a default length of 11 inches
+	 */
+	public function woocommerce_product_length_filter( $length, $product ) {
+		// first check the DB for stored values
+		if ( empty($length) || $length == 0 ) {
+			// see if the length is actually set 
+			$length = get_post_meta( $product->get_id(), '_length', true );
+
+			if( empty($length) && $product->get_type() == 'variation' ) {
+				// get the parent product and get the length there
+				$length = get_post_meta( $product->get_parent_id(), '_length', true );
+			}
+		}
+		if ( empty($length) || $length == 0 ) {
+			$length = 11;
+		}
+		return $length;
+	}
+
+	/**
+	 * set a default height of 1.5 inches
+	 */
+	public function woocommerce_product_height_filter( $height, $product ) {
+		// first check the DB for stored values
+		if ( empty($height) || $height == 0 ) {
+			// see if the height is actually set 
+			$height = get_post_meta( $product->get_id(), '_height', true );
+
+			if( empty($height) && $product->get_type() == 'variation' ) {
+				// get the parent product and get the height there
+				$height = get_post_meta( $product->get_parent_id(), '_height', true );
+			}
+		}
+		if ( empty($height) || $height == 0 ) {
+			$height = 1.5;
+		}
+		return $height;
 	}
 
 }

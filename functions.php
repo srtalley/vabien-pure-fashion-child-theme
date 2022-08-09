@@ -19,24 +19,11 @@ require_once( THEME_DIR . '/includes/class-woocommerce-account.php' );
 require_once( THEME_DIR . '/includes/class-woocommerce-cart.php' );
 require_once( THEME_DIR . '/includes/class-woocommerce-order.php' );
 require_once( THEME_DIR . '/includes/class-woocommerce-product.php' );
+require_once( THEME_DIR . '/includes/class-woocommerce-shipping.php' );
 require_once( THEME_DIR . '/includes/class-woocommerce-shop.php' );
 require_once( THEME_DIR . '/includes/class-sizing-help.php' );
 require_once( THEME_DIR . '/includes/class-mega-menu.php' );
 
-// add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
-// function theme_enqueue_styles() {
-//     wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
-// }
-// add_action( 'wp_enqueue_scripts', '_load_styles' , 10 );
-
-//  function _load_styles() {
-// 	wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css', '', wp_get_theme()->get('Version'), 'all' );
-
-// 	wp_enqueue_style( 'vabien-child-style', get_stylesheet_directory_uri() . '/style.css', '', wp_get_theme()->get('Version'), 'all' );
-
-// 	// wp_enqueue_script( 'main', get_stylesheet_directory_uri() . '/main.js', '', '1.2.2', true );
-
-// }
 /**
  * Add the pinterest code
  */
@@ -77,6 +64,14 @@ if ( ! function_exists( 'PrintArray' ) ) {
 * Logging function to debug.log
 */
 function wl ( $log )  {
+
+    if(site_url() == "https://vabienusa.dev.dustysun.com") {
+         // echo ini_get('error_log');
+        // these lines fix an issue at runtime with soap and the Octolize plugin
+        $log_path = '/var/www/html/wp-content/debug.log';
+        ini_set( 'error_log', $log_path );
+    }
+   
     if ( is_array( $log ) || is_object( $log ) ) {
         error_log( print_r( $log, true ) );
     } else {
@@ -84,4 +79,16 @@ function wl ( $log )  {
     }
 }
 
-// NOTHING CHOULD BE ADDED TO THE FUNCTIONS FILE - PLEASE PLACE IT IN THE CORRECT FILE ABOVE AS A CLASS ENTRY
+/**
+ * Log to the console
+ */
+function console_log($output, $with_script_tags = true) {
+    $js_code = 'console.log(Va Bien Message: ' . json_encode($output, JSON_HEX_TAG) . ');';
+    if ($with_script_tags) {
+        $js_code = '<script>' . $js_code . '</script>';
+    }
+    echo $js_code;
+}
+// NOTHING SHOULD BE ADDED TO THE FUNCTIONS FILE - PLEASE PLACE IT IN THE CORRECT FILE ABOVE AS A CLASS ENTRY
+
+

@@ -7,6 +7,7 @@ jQuery(function($) {
         setupScrollbarsWrapper();
         setupSingleProductSharing();
         setupAjaxAddToCart();
+        setupShippingSignatureSelection();
     });
 
     function setupSingleProductQTY() {
@@ -263,7 +264,7 @@ jQuery(function($) {
                 $('body').trigger('wc_fragments_refreshed');
                 btn.removeClass('disabled').text(btn_text);
               },
-              error: function(response) {
+              error: function(response) { 
                 $('body').trigger('wc_fragments_ajax_error');
                 btn.removeClass('disabled').text(btn_text);
               }
@@ -272,10 +273,78 @@ jQuery(function($) {
         
       
     }
+    /**
+     * Handle the signature required or waived fields
+     */
+    function setupShippingSignatureSelection() {
+
+      // disable the proceed to checkout on the cart page on page load
+      // and when the shipping method is selected
+      disable_proceed_to_checkout();
+      $( document.body ).on( 'updated_shipping_method', function(e) {
+        disable_proceed_to_checkout();
+      });
+
+      function disable_proceed_to_checkout() {
+        var proceed_to_checkout_button_wrapper = $('.woocommerce-cart .wc-proceed-to-checkout');
+
+        if($('#vabien_shipping_signature_selection_shown').length && $('#vabien_shipping_signature_selection_shown').val() == 'yes') {
+          // disable the checkout button if no signature option is selected
+            if($(proceed_to_checkout_button_wrapper).length) {
+              var checked_signature_option = $(':input[name="vabien_signature_selection"][type=radio]:checked');
+
+              if(!$(checked_signature_option).length) {
+                setTimeout(function(){
+                  $(proceed_to_checkout_button_wrapper).addClass('disabled');
+                }, 500);
+              }
+            }
+        } else {
+          if($(proceed_to_checkout_button_wrapper).length) {
+            $(proceed_to_checkout_button_wrapper).removeClass('disabled');
+          }
+        }
+      }
+      $( document.body ).on( 'country_to_state_changed', function(e) {
+        setTimeout(function(){
+          disable_proceed_to_checkout();
+        }, 2000);
+        
+      });
+      // show the error message
+      $(document).on('click', '.woocommerce-cart .wc-proceed-to-checkout.disabled', function(e) {
+        $('.error-vabien_shipping_signature_selection').addClass('show');
+      });
+
+      // ajax vabien_site_functions
+      $(document).on('click', ':input[name="vabien_signature_selection"][type=radio]:checked', function (e) {
+        var vabien_signature_selection = $(e.target).val();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: vabien_site_functions.ajaxurl,
+            data: {
+                'action': 'vabien_shipping_signature_selection',
+                'nonce': vabien_site_functions.ajaxnonce,
+                'vabien_signature_selection': vabien_signature_selection
+            },
+            success: function(data) {
+              // console.log(data);
+              $('.error-vabien_shipping_signature_selection').removeClass('show');
+              var proceed_to_checkout_button_wrapper = $('.woocommerce-cart .wc-proceed-to-checkout');
+              if($(proceed_to_checkout_button_wrapper).length) {
+                $(proceed_to_checkout_button_wrapper).removeClass('disabled');
+              }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR + ' :: ' + textStatus + ' :: ' + errorThrown);
+            }
+        });
+      });
+    }
 });
 
 
-// added by Jared
 // v1.2.2
 var _InitialSiteLoad;
 var _BraSizeCalculator;

@@ -56,7 +56,7 @@ class Theme_Setup {
 		/* Remove theme script setup and create a customized one */
 		add_action( 'init', array($this, 'remove_thb_scripts_styles'), 10, 1 );
 		// remove_action( 'wp_enqueue_scripts', 'thb_woocommerce_scripts_styles', 10001 );
-		add_action( 'wp_enqueue_scripts', array($this, 'vabient_thb_woocommece_scripts_styles'), 1001 );
+		add_action( 'wp_enqueue_scripts', array($this, 'vabien_thb_woocommerce_scripts_styles'), 1001 );
 		/*-----------------------------------------------------------------------------------*/
 		/* Theme Settings  */
 		/*-----------------------------------------------------------------------------------*/
@@ -187,6 +187,10 @@ class Theme_Setup {
 			wp_enqueue_script( 'bezier-easing', get_stylesheet_directory_uri() . '/lib/vendor/bezier-easing/bezier-easing.js', array( 'jquery' ), '3.5.1', true );
 			wp_enqueue_script( 'vabien-site', get_stylesheet_directory_uri() . '/assets/js/site.js', array( 'jquery' ), wp_get_theme()->get('Version'), true );
 
+			wp_localize_script( 'vabien-site', 'vabien_site_functions', array(
+				'ajaxurl'   => admin_url( 'admin-ajax.php' ),
+				'ajaxnonce' => wp_create_nonce( 'vabien_site_functions' )
+			  ) );
 			// wp_localize_script(
 			// 	'vabien-site',
 			// 	array(

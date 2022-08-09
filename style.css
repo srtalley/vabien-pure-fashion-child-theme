@@ -2,7 +2,7 @@
 	Theme Name: Pure Fashion - VabienUSA Child Theme
 	Theme URI: https://purefashion.fuelthemes.net
 	Description: <strong>A fast &amp; optimized WooCommerce WordPress Theme by <a href="https://fuelthemes.net" target="_blank">fuelthemes</a></strong>
-	Version: 1.0.1
+	Version: 1.1
 	Author: Fuel Themes
 	Author URI: https://fuelthemes.net
 	Text Domain: pure-fashion
@@ -888,6 +888,50 @@ div#wrapper .row.full-width-row > .small-12 {
 .woocommerce-cart .checkout-button:hover {
   background: #151515 !important;
 }
+.woocommerce-cart .wc-proceed-to-checkout {
+  position: relative;
+}
+.woocommerce-cart .wc-proceed-to-checkout.disabled:before {
+  content: '';
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.5;
+  cursor: not-allowed;
+  z-index: 99999;
+}
+.wrapper-vabien_shipping_signature_selection {
+  position: relative;
+}
+.error-vabien_shipping_signature_selection {
+  display: none;
+  position: absolute;
+  background-color: #b70000;
+  color:  #fff;
+  padding:  5px 20px;
+  border-radius: 10px;
+  top: -43px;
+  left: -61px;
+  font-size: 16px;
+}
+.error-vabien_shipping_signature_selection.show {
+  display: block;
+}
+.error-vabien_shipping_signature_selection:before {
+  content: '';
+  width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #b70000;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 100%);
+  position: absolute;
+}
 @media (max-width: 1068px) {
 
   .woocommerce-cart .thb-cart-column + .columns {
@@ -1180,6 +1224,38 @@ div#wrapper .row.full-width-row > .small-12 {
 }
 .woocommerce-checkout-payment label {
   text-transform: uppercase;
+}
+table.shop_table.woocommerce-checkout-review-order-table tr {
+  display: flex;
+  justify-content: space-between;
+}
+table.shop_table.woocommerce-checkout-review-order-table tr.woocommerce-shipping-totals.shipping {
+  justify-content: flex-start;
+}
+table.shop_table.woocommerce-checkout-review-order-table thead tr {
+  border-bottom: none;
+}
+.shop_table tfoot tr.woocommerce-shipping-totals td {
+  padding-left: 0;
+}
+.shop_table tfoot tr.woocommerce-shipping-totals th {
+  width: 80px;
+}
+.shop_table tfoot tr.woocommerce-shipping-totals .woocommerce-shipping-methods li {
+  padding-left: 20px;
+  text-indent: -18px;
+}
+.shop_table tfoot tr.woocommerce-shipping-totals .woocommerce-shipping-methods input[type="radio"] + label {
+  display: inline;
+  line-height: 1.5;
+  font-size: 16px;
+  vertical-align: middle;
+}
+.wrapper-vabien_shipping_signature_selection ul {
+  margin-left: 20px;
+}
+.shop_table tfoot tr.woocommerce-shipping-totals .wrapper-vabien_shipping_signature_selection ul {
+  margin-left: 0;
 }
 @media (max-width: 1068px) {
   .woocommerce-checkout .checkout.woocommerce-checkout .medium-7,

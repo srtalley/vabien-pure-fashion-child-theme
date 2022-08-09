@@ -1,6 +1,11 @@
 # Changelog
 
 All notable changes to the VaBien website child theme will be documented in this file.
+
+## [1.1] - 2022-08-08
+* Added class to handle shipping options, including FedEx live rates.
+* Additional styling updates.
+
 ## [1.0.1] - 2022-07-06
 * Added the new order statuses to the bulk edit screen under WooCommerce > Orders.
 

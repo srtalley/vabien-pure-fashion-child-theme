@@ -4,6 +4,8 @@ namespace Vabien\Theme;
 
 class WooCommerce_Cart {
 
+    private $debug = false;
+
     public function __construct() {
 
         add_action( 'woocommerce_cart_is_empty', array($this, 'vabien_empty_cart_message_start'), 1, 1 );
@@ -28,7 +30,7 @@ class WooCommerce_Cart {
         </div>
         <?php
     }
-}
 
+}
 
 $vabien_woocommerce_cart = new WooCommerce_Cart();

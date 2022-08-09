@@ -35,8 +35,6 @@ class WooCommerce_Extensions {
 		add_filter( 'woocommerce_register_shop_order_post_statuses', array( $this, 'add_custom_order_status_post_type') );
 		add_filter( 'wc_order_statuses', array( $this, 'add_custom_order_status') );
 
-		// add_filter('wp_schema_pro_schema_product', array($this,'dst_wp_schema_pro_schema_product'), 10, 3);
-
 		// add_filter( 'woocommerce_helper_suppress_admin_notices', '__return_true' );
 		// add_filter( 'woocommerce_helper_suppress_connect_notice', '__return_true' );
 		
@@ -214,12 +212,7 @@ class WooCommerce_Extensions {
 
 	}
 
-	public function dst_wp_schema_pro_schema_product($schema, $data, $post) {
-		$product_permalink = get_the_permalink($post->ID);
 
-		$schema['brand'] = 'Va Bien';
-		return $schema;
-	}
 
 	public function add_checkout_title() {
 		echo '<h1 class="thb-shop-title">Checkout</h1>';
