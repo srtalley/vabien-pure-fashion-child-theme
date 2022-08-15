@@ -9,8 +9,6 @@ class WooCommerce_Product {
         add_action( 'woocommerce_init', array($this, 'vabien_modify_actions'), 10, 1 );
         // add_filter( 'woocommerce_single_product_carousel_options', array($this, 'cuswoo_update_woo_flexslider_options') );
 
-		add_filter( 'woocommerce_single_product_image_thumbnail_html', array($this, 'move_wc_img_thumb_title'), 10, 2);
-
         add_action( 'woocommerce_before_single_variation', array( $this, 'bra_size_calculator_popup' ) );
         add_action( 'woocommerce_after_single_product_summary', array( $this, 'bra_sizing_form_popup_html') );
 
@@ -120,36 +118,7 @@ class WooCommerce_Product {
 			100, 100
 		);
 	}
-	/** 
-	 * Move the title tag to the alt tag if the alt tag is empty
-	 */
-	public function move_wc_img_thumb_title($content, $post_thumbnail_id) {
-		$dom = new \DOMDocument( '1.0', 'UTF-8' );
-        
 
-		@$dom->loadHTML( mb_convert_encoding( "<div class='vabien-container'>{$content}</div>", 'HTML-ENTITIES', 'UTF-8' ), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
-
-        $html = new \DOMXPath( $dom );
-        foreach ( $html->query( "//img" ) as $node ) {
-            // Return image URL
-            $img_url = $node->getAttribute( "src" );
-
-            // Set alt for Post & Pages & Products
-            if ( is_singular( array( 'post', 'page', 'product' ) ) ) {
-                if ( empty($node->getAttribute( 'alt' )) ) {
-					if( !empty($node->getAttribute('title'))) {
-						$node->setAttribute( "alt", $node->getAttribute('title'));
-					}
-				}
-				$node->setAttribute( "title", '');
-            }
-        }
-        // Set alt for Post/Pages/Products
-        if ( is_singular( array( 'post', 'page', 'product' ) ) ) {
-			$content = $dom->saveHtml();
-		}
-        return $content;
-	}
     /** 
      * Filer WooCommerce Flexslider options - Add Navigation Arrows
      */

@@ -83,6 +83,10 @@ class Theme_Setup {
 
 		add_action( 'thb_logo', array($this, 'vabien_white_logo'), 2, 1 );
 
+		/* Image Title and Alt Tags */
+		add_filter( 'the_content', array( $this, 'img_move_title_to_alt_tag' ), 100 );
+		add_filter( 'post_thumbnail_html', array( $this, 'img_move_title_to_alt_tag' ), 100 );
+		add_filter( 'woocommerce_single_product_image_thumbnail_html', array($this, 'img_move_title_to_alt_tag'), 10 );
 
 	}
 
@@ -289,7 +293,37 @@ class Theme_Setup {
 	
 	<?php
 	}
+
+		/**
+	 * Move the title tag to the alt tag if the alt tag is empty
+	 */
+	public function img_move_title_to_alt_tag($content) {
+		$dom = new \DOMDocument( '1.0', 'UTF-8' );
+        
+
+		@$dom->loadHTML( mb_convert_encoding( "<div class='vabien-container'>{$content}</div>", 'HTML-ENTITIES', 'UTF-8' ), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+
+        $html = new \DOMXPath( $dom );
+        foreach ( $html->query( "//img" ) as $node ) {
+            // Return image URL
+            $img_url = $node->getAttribute( "src" );
+
+            // Set alt for Post & Pages & Products
+            if ( is_singular( array( 'post', 'page', 'product' ) ) ) {
+                if ( empty($node->getAttribute( 'alt' )) ) {
+					if( !empty($node->getAttribute('title'))) {
+						$node->setAttribute( "alt", $node->getAttribute('title'));
+					}
+				}
+				$node->setAttribute( "title", '');
+            }
+        }
+        // Set alt for Post/Pages/Products
+        if ( is_singular( array( 'post', 'page', 'product' ) ) ) {
+			$content = $dom->saveHtml();
+		}
+        return $content;
+	}
 }
 
-// Theme::init();
 $vabien_theme_setup = new Theme_Setup();
