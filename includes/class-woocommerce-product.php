@@ -137,7 +137,6 @@ class WooCommerce_Product {
             // Set alt for Post & Pages & Products
             if ( is_singular( array( 'post', 'page', 'product' ) ) ) {
                 if ( empty($node->getAttribute( 'alt' )) ) {
-					wl($node->getAttribute('title'));
 					if( !empty($node->getAttribute('title'))) {
 						$node->setAttribute( "alt", $node->getAttribute('title'));
 					}
