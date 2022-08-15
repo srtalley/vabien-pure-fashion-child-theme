@@ -2,6 +2,9 @@
 
 All notable changes to the VaBien website child theme will be documented in this file.
 
+## [1.2] - 2022-08-15
+* Updated the WooCommerce product class to move the image title tags to the alt tags.
+
 ## [1.1] - 2022-08-08
 * Added class to handle shipping options, including FedEx live rates.
 * Additional styling updates.

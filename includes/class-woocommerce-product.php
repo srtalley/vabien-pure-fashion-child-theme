@@ -9,6 +9,8 @@ class WooCommerce_Product {
         add_action( 'woocommerce_init', array($this, 'vabien_modify_actions'), 10, 1 );
         // add_filter( 'woocommerce_single_product_carousel_options', array($this, 'cuswoo_update_woo_flexslider_options') );
 
+		add_filter( 'woocommerce_single_product_image_thumbnail_html', array($this, 'move_wc_img_thumb_title'), 10, 2);
+
         add_action( 'woocommerce_before_single_variation', array( $this, 'bra_size_calculator_popup' ) );
         add_action( 'woocommerce_after_single_product_summary', array( $this, 'bra_sizing_form_popup_html') );
 
@@ -77,6 +79,10 @@ class WooCommerce_Product {
 	</aside>
         <?php
     }
+
+	/**
+	 * Add the actions on init for the images
+	 */
     public function vabien_modify_actions() {
         remove_action( 'woocommerce_before_main_content', 'thb_wc_breadcrumbs', 0 );
         // remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
@@ -87,11 +93,12 @@ class WooCommerce_Product {
 
         remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
         add_action( 'woocommerce_before_single_product_summary', array($this, 'vabien_product_images'), 20 );
-        // add_action( 'woocommerce_before_single_product_summary', 'after_product_images', 21 );
 
         // add_theme_support( 'wc-product-gallery-slider' );
-
     }
+	/**
+	 * Add the product image HTML for the thumbs
+	 */
     public function vabien_product_images() {
         echo '<div id="product-thumbnails">';
 		add_filter( 'woocommerce_gallery_image_size', array($this, 'change_woocommerce_image_size_gallery_thumbnail'), 10 );
@@ -112,6 +119,37 @@ class WooCommerce_Product {
 		return array(
 			100, 100
 		);
+	}
+	/** 
+	 * Move the title tag to the alt tag if the alt tag is empty
+	 */
+	public function move_wc_img_thumb_title($content, $post_thumbnail_id) {
+		$dom = new \DOMDocument( '1.0', 'UTF-8' );
+        
+
+		@$dom->loadHTML( mb_convert_encoding( "<div class='vabien-container'>{$content}</div>", 'HTML-ENTITIES', 'UTF-8' ), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+
+        $html = new \DOMXPath( $dom );
+        foreach ( $html->query( "//img" ) as $node ) {
+            // Return image URL
+            $img_url = $node->getAttribute( "src" );
+
+            // Set alt for Post & Pages & Products
+            if ( is_singular( array( 'post', 'page', 'product' ) ) ) {
+                if ( empty($node->getAttribute( 'alt' )) ) {
+					wl($node->getAttribute('title'));
+					if( !empty($node->getAttribute('title'))) {
+						$node->setAttribute( "alt", $node->getAttribute('title'));
+					}
+				}
+				$node->setAttribute( "title", '');
+            }
+        }
+        // Set alt for Post/Pages/Products
+        if ( is_singular( array( 'post', 'page', 'product' ) ) ) {
+			$content = $dom->saveHtml();
+		}
+        return $content;
 	}
     /** 
      * Filer WooCommerce Flexslider options - Add Navigation Arrows
