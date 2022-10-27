@@ -45,7 +45,7 @@ class Theme_Setup {
 			$pattern = '/.*' . preg_quote( esc_url( get_feed_link( 'comments_' . get_default_feed() ) ), '/' ) . '.*[\r\n]+/';
 			echo preg_replace( $pattern, '', ob_get_clean() );
 		}, 3, 0 );
-
+		add_action( 'admin_head', array($this, 'vbn_admin_styles'), 1000) ;
 		if ( ! class_exists( 'WPSEO_Frontend' ) ) {
 			remove_action( 'wp_head', 'rel_canonical' );
 			add_action( 'wp_head', array( $this, 'rel_canonical' ) );
@@ -145,6 +145,38 @@ class Theme_Setup {
 
 	}
 
+	/**
+	 * modify styles in the admin area
+	 */
+	public function vbn_admin_styles() {
+
+		?>
+        <style type="text/css">
+			/* FedEx Live Rates */
+			div#wpdesk-notice-notice-FedEx\ WooCommerce\ Live\ Rates\ PRO {
+				display: none;
+			}
+			/* Pixel Your Site Hacks */
+			.pys-optin-notice.pys-notice-wrapper {
+				display: none !important;
+			}
+			/* BEAR WooCommerce Bulk Edit */
+			#pn_woobe_ask_favour {
+				display: none;
+			}
+			/* WP Bakery Activation Notice */
+			#vc_license-activation-notice {
+				display: none;
+			}
+			/* Updraft Plus ads */
+			.updraft-ad-container {
+				display: none;
+			}
+		</style>
+
+		<?php
+
+	}
 	public function remove_xmlrpc_pingback_ping( $methods ) {
 		unset( $methods['pingback.ping'] );
 

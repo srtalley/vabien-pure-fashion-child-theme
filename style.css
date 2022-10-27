@@ -2,7 +2,7 @@
 	Theme Name: Pure Fashion - VabienUSA Child Theme
 	Theme URI: https://purefashion.fuelthemes.net
 	Description: <strong>A fast &amp; optimized WooCommerce WordPress Theme by <a href="https://fuelthemes.net" target="_blank">fuelthemes</a></strong>
-	Version: 1.2
+	Version: 1.2.1
 	Author: Fuel Themes
 	Author URI: https://fuelthemes.net
 	Text Domain: pure-fashion
@@ -542,7 +542,7 @@ div#wrapper .row.full-width-row > .small-12 {
 }
 .thb-shop-content,
 .single-product #wrapper div[role="main"],
-.woocommerce-cart .no-vc > .woocommerce > .row,
+.woocommerce-cart .no-vc > .vabien-container > .woocommerce > .row,
 .woocommerce-checkout .checkout.woocommerce-checkout {
 /* .woocommerce-account div[role="main"] .type-page { */
   max-width: 90rem;
@@ -552,7 +552,7 @@ div#wrapper .row.full-width-row > .small-12 {
 @media (max-width: 1440px) {
   .thb-shop-content,
   .single-product #wrapper div[role="main"],
-  .woocommerce-cart .no-vc > .woocommerce > .row,
+  .woocommerce-cart .no-vc > .vabien-container > .woocommerce > .row,
   .woocommerce-checkout .checkout.woocommerce-checkout {
   /* .woocommerce-account div[role="main"] .type-page  { */
     max-width: 100%;
@@ -1497,15 +1497,15 @@ table.shop_table.woocommerce-checkout-review-order-table thead tr {
 .woocommerce-account .vabien-login-form .woocommerce-form-login .woocommerce-LostPassword a {
   font-size: 12px;
 }
-.woocommerce-account .no-vc > .woocommerce {
+.woocommerce-account .no-vc > .vabien-container > .woocommerce {
   max-width: 90rem;
   margin-left: auto;
   margin-right: auto;
   flex-wrap: wrap;
-  padding: 0 50px;
+  padding: 20px 50px 0;
 }
 @media (max-width: 735px) {
-  .woocommerce-account .no-vc > .woocommerce { 
+  .woocommerce-account .no-vc > .vabien-container > .woocommerce { 
     padding: 0 15px; 
   }
 }
