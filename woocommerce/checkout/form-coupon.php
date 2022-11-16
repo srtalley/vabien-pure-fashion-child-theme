@@ -11,29 +11,28 @@
  * the readme will list any important changes.
  *
  * @see https://docs.woocommerce.com/document/template-structure/
- * @package WooCommerce/Templates
- * @version 3.4.4
+ * @package WooCommerce\Templates
+ * @version 7.0.1
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+defined( 'ABSPATH' ) || exit;
 
 if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 	return;
 }
+
 ?>
 
 <div class="checkout-coupon">
 	<div class="row align-center">
 		<div class="small-12 medium-7 large-5 text-center columns">
 			<div class="thb-checkout-coupon">
-				<?php esc_html_e("Have a coupon?", 'north' ); ?> <a class="showcoupon"><?php esc_html_e("Click here to enter your code", 'north' ); ?></a>
+				<?php esc_html_e("Have a coupon?", 'vabien' ); ?> <a class="showcoupon"><?php esc_html_e("Click here to enter your code", 'vabien' ); ?></a>
 			</div>
 			<form class="checkout_coupon woocommerce-form-coupon" method="post" style="display:none">
 				<div class="coupon">
-					<input type="text" name="coupon_code" class="input-text" placeholder="<?php esc_attr_e( 'Coupon code', 'north' ); ?>" id="coupon_code" value="" />
-					<button type="submit" class="button" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'north' ); ?>"><?php esc_html_e( 'Apply coupon', 'north' ); ?></button>
+					<input type="text" name="coupon_code" class="input-text" placeholder="<?php esc_attr_e( 'Coupon code', 'vabien' ); ?>" id="coupon_code" value="" />
+					<button type="submit" class="button" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'vabien' ); ?>"><?php esc_html_e( 'Apply coupon', 'vabien' ); ?></button>
 				</div>
 			</form>
 		</div>

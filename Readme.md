@@ -2,6 +2,9 @@
 
 All notable changes to the VaBien website child theme will be documented in this file.
 
+## [1.2.2] - 2022-11-15
+* Updated the form-coupon.php and form-login.php templats to the latest version.
+
 ## [1.2] - 2022-08-15
 * Updated the WooCommerce product class to move the image title tags to the alt tags.
 
