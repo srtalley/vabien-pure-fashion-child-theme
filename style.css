@@ -2,7 +2,7 @@
 	Theme Name: Pure Fashion - VabienUSA Child Theme
 	Theme URI: https://purefashion.fuelthemes.net
 	Description: <strong>A fast &amp; optimized WooCommerce WordPress Theme by <a href="https://fuelthemes.net" target="_blank">fuelthemes</a></strong>
-	Version: 1.2.1
+	Version: 1.2.3
 	Author: Fuel Themes
 	Author URI: https://fuelthemes.net
 	Text Domain: pure-fashion
@@ -177,6 +177,12 @@ body, .post .post-title h3, .post .post-title h1, .shop-general-title, .cart_tot
 #scroll_to_top {
   display: none;
 }
+/** Subheader **/
+aside.subheader.dark {
+  background: #fff;
+  color: #000;
+  font-size: 14px;
+}
 /** Header **/
 .header-wrapper {
   height: auto !important;
@@ -220,7 +226,7 @@ body, .post .post-title h3, .post .post-title h1, .shop-general-title, .cart_tot
 .header .vabien-menu {
   padding: 0;
 }
-.home .header-wrapper {
+.vabien-transparent-header .header-wrapper {
   position: absolute;
   top: 0;
 }
@@ -265,11 +271,11 @@ body, .post .post-title h3, .post .post-title h1, .shop-general-title, .cart_tot
   }
 }
 
-.home .header:not(.fixed) .thb-secondary-item.thb-quick-cart span.thb-item-icon:before,
-.home .header:not(.fixed) .mobile-toggle-holder .mobile-toggle span {
+.vabien-transparent-header .header:not(.fixed) .thb-secondary-item.thb-quick-cart span.thb-item-icon:before,
+.vabien-transparent-header .header:not(.fixed) .mobile-toggle-holder .mobile-toggle span {
   color: #fff;
 }
-.home .header:not(.fixed) .mobile-toggle-holder .mobile-toggle span {
+.vabien-transparent-header .header:not(.fixed) .mobile-toggle-holder .mobile-toggle span {
   background-color: #fff;
 }
 .thb-secondary-area .thb-secondary-item .count {
@@ -278,42 +284,42 @@ body, .post .post-title h3, .post .post-title h1, .shop-general-title, .cart_tot
 .header.fixed.thb-fixed-shadow-style1:before {
   box-shadow: none;
 }
-.home .header:not(.fixed) {
+.vabien-transparent-header .header:not(.fixed) {
   background-color: rgba(0,0,0,0);
   position: fixed;
   top: 0;
 }
-.home .header:not(.fixed):hover {
+.vabien-transparent-header .header:not(.fixed):hover {
   background-color: #fff;
 }
-.home .header:not(.fixed) .logo-holder {
+.vabien-transparent-header .header:not(.fixed) .logo-holder {
   display: none;
 }
-.home .header:not(.fixed):hover .logo-holder {
+.vabien-transparent-header .header:not(.fixed):hover .logo-holder {
   display: flex;
 }
-.home .header:not(.fixed) .logo-holder.transparent {
+.vabien-transparent-header .header:not(.fixed) .logo-holder.transparent {
   display: flex;
 }
-.home .header:not(.fixed):hover .logo-holder.transparent  {
+.vabien-transparent-header .header:not(.fixed):hover .logo-holder.transparent  {
   display: none;
 }
-.home.admin-bar .header {
+.vabien-transparent-header.admin-bar .header {
   top: 32px;
 }
 
-.home .header:not(.fixed) .vabien-menu > .menu-item > a,
-.home .header:not(.fixed) .thb-secondary-area .thb-secondary-item .thb-item-text,
-.home .header:not(.fixed) .thb-full-menu > .menu-item > a {
+.vabien-transparent-header .header:not(.fixed) .vabien-menu > .menu-item > a,
+.vabien-transparent-header .header:not(.fixed) .thb-secondary-area .thb-secondary-item .thb-item-text,
+.vabien-transparent-header .header:not(.fixed) .thb-full-menu > .menu-item > a {
   color: #fff;
 }
-.home .header:not(.fixed):hover .vabien-menu > .menu-item > a,
-.home .header:not(.fixed):hover .thb-secondary-area .thb-secondary-item .thb-item-text,
-.home .header:not(.fixed):hover .thb-full-menu > .menu-item > a,
-.home .header:not(.fixed):hover .thb-secondary-item.thb-quick-cart span.thb-item-icon:before {
+.vabien-transparent-header .header:not(.fixed):hover .vabien-menu > .menu-item > a,
+.vabien-transparent-header .header:not(.fixed):hover .thb-secondary-area .thb-secondary-item .thb-item-text,
+.vabien-transparent-header .header:not(.fixed):hover .thb-full-menu > .menu-item > a,
+.vabien-transparent-header .header:not(.fixed):hover .thb-secondary-item.thb-quick-cart span.thb-item-icon:before {
   color: #151515;
 }
-.home .header:not(.fixed):hover .mobile-toggle-holder .mobile-toggle span {
+.vabien-transparent-header .header:not(.fixed):hover .mobile-toggle-holder .mobile-toggle span {
   background-color: #272525;
 }
 .mobile-menu-top .woocommerce-product-search {
@@ -419,9 +425,9 @@ body, .post .post-title h3, .post .post-title h1, .shop-general-title, .cart_tot
   color: #151515;
 }
 
-.home .header:not(.fixed) #mega-menu-wrap-nav-menu #mega-menu-nav-menu > li.mega-menu-megamenu > ul.mega-sub-menu > li.mega-menu-item, 
-.home .header:not(.fixed) #mega-menu-wrap-nav-menu #mega-menu-nav-menu > li.mega-menu-megamenu > ul.mega-sub-menu li.mega-menu-column > ul.mega-sub-menu > li.mega-menu-item,
-.home .header:not(.fixed) #mega-menu-wrap-nav-menu #mega-menu-nav-menu > li.mega-menu-item > a.mega-menu-link {
+.vabien-transparent-header .header:not(.fixed) #mega-menu-wrap-nav-menu #mega-menu-nav-menu > li.mega-menu-megamenu > ul.mega-sub-menu > li.mega-menu-item, 
+.vabien-transparent-header .header:not(.fixed) #mega-menu-wrap-nav-menu #mega-menu-nav-menu > li.mega-menu-megamenu > ul.mega-sub-menu li.mega-menu-column > ul.mega-sub-menu > li.mega-menu-item,
+.vabien-transparent-header .header:not(.fixed) #mega-menu-wrap-nav-menu #mega-menu-nav-menu > li.mega-menu-item > a.mega-menu-link {
   color: #fff;
 }
 .mega-menu-item-7324 .mega-sub-menu >  #mega-menu-wrap-nav-menu #mega-menu-nav-menu li.mega-menu-item {

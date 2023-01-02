@@ -92,3 +92,14 @@ function console_log($output, $with_script_tags = true) {
 // NOTHING SHOULD BE ADDED TO THE FUNCTIONS FILE - PLEASE PLACE IT IN THE CORRECT FILE ABOVE AS A CLASS ENTRY
 
 
+
+
+/**
+ * Filter to hide the Gravity Forms "Add Form" button from posts.
+ *
+ * @return bool
+ */
+function hide_gf_add_form_button() {
+	return false;
+}
+add_filter( 'gform_display_add_form_button', 'hide_gf_add_form_button' );

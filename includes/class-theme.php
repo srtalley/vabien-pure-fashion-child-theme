@@ -88,6 +88,9 @@ class Theme_Setup {
 		add_filter( 'post_thumbnail_html', array( $this, 'img_move_title_to_alt_tag' ), 100 );
 		add_filter( 'woocommerce_single_product_image_thumbnail_html', array($this, 'img_move_title_to_alt_tag'), 10 );
 
+		/* Body Class */
+		add_filter( 'body_class', array($this, 'vabien_body_classes'), 10, 1 );
+
 	}
 
 	// public static function init() {
@@ -326,7 +329,7 @@ class Theme_Setup {
 	<?php
 	}
 
-		/**
+	/**
 	 * Move the title tag to the alt tag if the alt tag is empty
 	 */
 	public function img_move_title_to_alt_tag($content) {
@@ -356,6 +359,21 @@ class Theme_Setup {
 		}
         return $content;
 	}
+
+	/**
+	 * Filter the body classes
+	 */
+	public function vabien_body_classes( $classes ) {
+
+		// get the page setting for the transparent header
+		$transparent_header = get_post_meta( get_the_ID(), 'use_transparent_header', true );
+		if(is_array($transparent_header) && in_array('transparent', $transparent_header)) {
+			$classes[] = 'vabien-transparent-header';
+		}
+
+		return $classes;
+	}
+
 }
 
 $vabien_theme_setup = new Theme_Setup();
